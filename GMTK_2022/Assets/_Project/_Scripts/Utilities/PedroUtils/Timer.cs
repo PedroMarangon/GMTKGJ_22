@@ -1,9 +1,8 @@
 ﻿// maded by Pedro M Marangon
-using PedroUtils;
 using System;
 using UnityEngine;
 
-namespace MVM16
+namespace PedroUtils
 {
 	public class Timer
 	{

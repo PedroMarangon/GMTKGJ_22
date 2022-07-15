@@ -1,7 +1,7 @@
 ﻿// Maded by Pedro M Marangon
 using UnityEngine;
 
-namespace MVM16
+namespace PedroUtils
 {
 	public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 	{

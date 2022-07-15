@@ -1,12 +1,9 @@
 ﻿// Maded by Pedro M Marangon
-using PedroUtils;
-using MVM16;
 using System.Threading.Tasks;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Game
+namespace PedroUtils
 {
 	public class DebugScreen : MonoBehaviour
 	{
