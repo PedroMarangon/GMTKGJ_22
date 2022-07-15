@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.pedromarangon.projectsetup": "file:D:/Arquivos/Desktop/Assets Unity/Project Setup",
     "com.unity.cinemachine": "2.8.6",
     "com.unity.collab-proxy": "1.15.17",
     "com.unity.feature.2d": "1.0.0",
