@@ -36,8 +36,8 @@ namespace GMTK22
             Transform bonecoTeste1;
             Transform bonecoTeste2;
 
-            bonecoTeste1 = GameObject.Find("alien").transform;
-            bonecoTeste2 = GameObject.Find("alien_01").transform;
+            bonecoTeste1 = GameObject.Find("Enemy").transform;
+            bonecoTeste2 = GameObject.Find("Character").transform;
 
             AtacarInimigo(bonecoTeste1, bonecoTeste2, 0);
         }
