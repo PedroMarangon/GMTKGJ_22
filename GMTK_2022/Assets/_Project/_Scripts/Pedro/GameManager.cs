@@ -28,6 +28,10 @@ namespace GMTK22
         private MicroState microState = MicroState.None;
 		private attackEnemy attackManager;
 
+
+		public Alien CrntAlien => crntAlien;
+		public Transform CrntTarget => crntTarget;
+
 		public int D20 { get; private set; } = 0;
 
 		private void Awake()
