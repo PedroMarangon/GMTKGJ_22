@@ -12,21 +12,17 @@ namespace GMTK22
 
 		protected Transform target;
 		protected ActionManager manager;
-		protected attackEnemy atkManager;
-		[MinMaxSlider(1, 8), SerializeField] protected Vector2 damageRange = new Vector2(1, 2);
-		protected int damage;
+		protected characterStats stats;
 
 		private void Awake()
 		{
 			manager = FindObjectOfType<ActionManager>();
-			atkManager = FindObjectOfType<attackEnemy>();
+			stats = GetComponent<characterStats>();
 		}
 
 		public abstract void SelectAction();
 
 		public abstract void SelectTarget();
-
-		protected void SetDamage() => damage = Mathf.RoundToInt(GetRandom.ValueInRange(damageRange));
 
 		protected Action GetAction(ActionType actionType) => actionType switch
 		{

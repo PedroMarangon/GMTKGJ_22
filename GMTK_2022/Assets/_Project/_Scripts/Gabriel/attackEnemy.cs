@@ -14,8 +14,9 @@ namespace GMTK22
 
         Transform attacker;
         Transform receiver;
-
-        Vector3 attackerStartPos;
+		private characterStats attackerStats;
+		private characterStats recieverStats;
+		Vector3 attackerStartPos;
         
 
         // Função que chama para atacar inimigo
@@ -23,6 +24,9 @@ namespace GMTK22
         {
             attacker = inputAttacker;
             receiver = inputReceiver;
+
+            attackerStats = inputAttacker.GetComponent<characterStats>();
+            recieverStats = inputReceiver.GetComponent<characterStats>();
 
             attackerStartPos = attacker.position;
 
@@ -34,7 +38,7 @@ namespace GMTK22
             
         }
 
-        public TimeTaunt(List<Transform> amigos, int valorDado)
+        public void TimeTaunt(List<Transform> amigos, int valorDado)
         {
 
         }
@@ -66,7 +70,7 @@ namespace GMTK22
                 else
                 {
                     atacando = false;
-                    receiver.GetComponent<characterStats>().ReceberDano(10);
+                    recieverStats?.ReceberDano(attackerStats.Damage);
                 }
             }
             else

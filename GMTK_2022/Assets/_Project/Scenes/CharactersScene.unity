@@ -205,7 +205,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 29653852}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1100149003}
+        m_TargetAssemblyTypeName: GMTK22.ActionManager, Assembly-CSharp
+        m_MethodName: RollD20
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &29653852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -525,6 +537,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 541056493}
   m_CullTransparentMesh: 1
+--- !u!4 &555708977 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2387814129089487193, guid: e0278e121d75cfd4d9012373f0ffc7b3, type: 3}
+  m_PrefabInstance: {fileID: 239684748}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &696426453
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -658,6 +675,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &886394670 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2387814129089487193, guid: e0278e121d75cfd4d9012373f0ffc7b3, type: 3}
+  m_PrefabInstance: {fileID: 2387814129438879351}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &919915741
 GameObject:
   m_ObjectHideFlags: 0
@@ -901,6 +923,16 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 925377667}
   m_CullTransparentMesh: 1
+--- !u!4 &988475199 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7846948176316797778, guid: 2b2b5cd40e2f46e43b2c1585cb698fd4, type: 3}
+  m_PrefabInstance: {fileID: 7846948176491314285}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1044699758 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7846948176316797778, guid: 2b2b5cd40e2f46e43b2c1585cb698fd4, type: 3}
+  m_PrefabInstance: {fileID: 1941262628}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1100149002
 GameObject:
   m_ObjectHideFlags: 0
@@ -938,8 +970,14 @@ MonoBehaviour:
     m_Bits: 64
   crntTarget: {fileID: 0}
   crntAlien: {fileID: 0}
-  aliens: []
-  robots: []
+  aliens:
+  - {fileID: 988475199}
+  - {fileID: 1044699758}
+  - {fileID: 1558415552}
+  robots:
+  - {fileID: 886394670}
+  - {fileID: 555708977}
+  - {fileID: 1392239074}
   actionPanel: {fileID: 925377668}
   distance: 0.6
 --- !u!4 &1100149004
@@ -1092,6 +1130,16 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1365826836}
   m_CullTransparentMesh: 1
+--- !u!4 &1392239074 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2387814129089487193, guid: e0278e121d75cfd4d9012373f0ffc7b3, type: 3}
+  m_PrefabInstance: {fileID: 2050278445}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1558415552 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7846948176316797778, guid: 2b2b5cd40e2f46e43b2c1585cb698fd4, type: 3}
+  m_PrefabInstance: {fileID: 696426453}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1732795262
 GameObject:
   m_ObjectHideFlags: 0
