@@ -21,8 +21,9 @@ namespace GMTK22
         // Função que faz com que o personagem receba dano
         public bool ReceberDano(int valorDado)
         {
-            if(valorDado > valorMinimoAtaque)
+            if(valorDado >= valorMinimoAtaque)
             {
+                this.LogSucess("Recebeu dano!");
                 health -= RollD8();
                 health = Mathf.Clamp(health, 0, max_health);
 
@@ -42,8 +43,9 @@ namespace GMTK22
 
         public bool ReceberCura(int valorDado)
         {
-            if(valorDado > valorMinimoHeal)
+            if(valorDado >= valorMinimoHeal)
             {
+                this.LogSucess("Foi curado!");
                 health += RollD8();
                 health = Mathf.Clamp(health, 0, max_health);
 
