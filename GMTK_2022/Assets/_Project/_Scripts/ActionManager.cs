@@ -2,7 +2,6 @@
 using NaughtyAttributes;
 using PedroUtils;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -46,7 +45,7 @@ namespace GMTK22
 			}
 		}
 
-		public Transform SelectRandomTargetFromGroup(Unit.TargetGroup targetGroup)
+		public Transform SelectRandomTarget(Unit.TargetGroup targetGroup)
 		{
 			return targetGroup switch
 			{
@@ -90,18 +89,5 @@ namespace GMTK22
 
 			return Physics2D.OverlapPoint(worldPos, mask);
 		}
-	}
-
-	public abstract class Unit : MonoBehaviour
-	{
-		public enum TargetGroup { Aliens, Robots }
-
-		private ActionManager manager;
-
-		private void Awake() => manager = FindObjectOfType<ActionManager>();
-
-		public abstract void SelectAction();
-
-		public abstract void SelectTarget();
 	}
 }
