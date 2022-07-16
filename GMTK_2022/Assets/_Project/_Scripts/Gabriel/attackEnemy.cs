@@ -36,8 +36,8 @@ namespace GMTK22
             Transform bonecoTeste1;
             Transform bonecoTeste2;
 
-            bonecoTeste1 = GameObject.Find("Enemy").transform;
-            bonecoTeste2 = GameObject.Find("Character").transform;
+            bonecoTeste2 = GameObject.Find("Enemy").transform;
+            bonecoTeste1 = GameObject.Find("Character").transform;
 
             AtacarInimigo(bonecoTeste1, bonecoTeste2, 0);
         }
@@ -56,7 +56,7 @@ namespace GMTK22
                 else
                 {
                     atacando = false;
-                    receiver.GetComponent<characterStats>().health = 50;
+                    receiver.GetComponent<characterStats>().ReceberDano(10);
                 }
             }
             else

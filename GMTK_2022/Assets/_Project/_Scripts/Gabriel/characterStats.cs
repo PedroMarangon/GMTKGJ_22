@@ -8,34 +8,44 @@ namespace GMTK22
     public class characterStats : MonoBehaviour
     {
         [SerializeField] Transform healthBar;
-        [SerializeField] float m_health = 100;
 
-        public float health
-        {
-            get
-            {
-                return m_health;
-            }
-            set
-            {
-                m_health = value;
-                healthBar.localScale = new Vector3(healthBar.localScale.x - 0.5f, healthBar.localScale.y, healthBar.localScale.z);
-            }
-        }
-
-
-
-
-        // // Start is called before the first frame update
-        void Start()
-        {
         
+        [SerializeField] int max_health = 20;
+        [SerializeField] int health = 20;
+
+
+        [SerializeField] int valorMinimoTaunt = 0;
+        [SerializeField] int valorMinimoHeal = 14;
+        [SerializeField] int valorMinimoAtaque = 4; 
+
+        // Função que faz com que o personagem receba dano
+        public bool ReceberDano(int valorDado)
+        {
+            if(valorDado > valorMinimoDado)
+            {
+                health -= valorDado;
+                health = Mathf.Clamp(health, 0, max_health);
+
+                //Código para ativar texto de dano aqui...
+
+                return true;
+            }
+
+            return false;
         }
 
-        // Update is called once per frame
+        void VidaAcompanharBarra()
+        {
+            Vector3 barraAtual = healthBar.localScale;
+            Vector3 targetBarra = new Vector3(health/max_health, healthBar.localScale.y, healthBar.localScale.z);
+
+            healthBar.localScale = Vector3.Lerp(barraAtual, targetBarra, Time.deltaTime * 2);            
+        }
+
         void Update()
         {
-        
+            VidaAcompanharBarra();
         }
+
     }
 }
