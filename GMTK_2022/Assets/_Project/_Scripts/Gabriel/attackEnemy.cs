@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using PedroUtils;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace GMTK22
@@ -15,7 +16,7 @@ namespace GMTK22
         Transform attacker;
         Transform receiver;
 		private characterStats attackerStats;
-		private characterStats recieverStats;
+		private characterStats receiverStats;
 		Vector3 attackerStartPos;
         
 
@@ -26,7 +27,7 @@ namespace GMTK22
             receiver = inputReceiver;
 
             attackerStats = inputAttacker.GetComponent<characterStats>();
-            recieverStats = inputReceiver.GetComponent<characterStats>();
+            receiverStats = inputReceiver.GetComponent<characterStats>();
 
             attackerStartPos = attacker.position;
 
@@ -35,7 +36,13 @@ namespace GMTK22
 
         public void CurarAmigo(Transform inputCurandeiro, Transform inputCurado, int valorDado)
         {
-            
+            attacker = inputCurandeiro;
+            receiver = inputCurado;
+
+            attackerStats = inputCurandeiro.GetComponent<characterStats>();
+            receiverStats = inputCurado.GetComponent<characterStats>();
+
+            receiverStats.ReceberCura(valorDado);
         }
 
         public void TimeTaunt(List<Transform> amigos, int valorDado)
@@ -43,6 +50,31 @@ namespace GMTK22
 
         }
 
+        [Button]
+        public void TestarAtk()
+        {
+            Transform bonecoTeste1;
+            Transform bonecoTeste2;
+
+            bonecoTeste2 = GameObject.Find("Enemy").transform;
+            bonecoTeste1 = GameObject.Find("Character").transform;
+
+            AtacarInimigo(bonecoTeste1, bonecoTeste2, 0);
+        }
+
+        [Button]
+        public void TestarCura()
+        {
+            Transform bonecoTeste1;
+            Transform bonecoTeste2;
+
+            bonecoTeste2 = GameObject.Find("Enemy").transform;
+            bonecoTeste1 = GameObject.Find("Character").transform;
+
+            CurarAmigo(bonecoTeste1, bonecoTeste2, 20);
+        }
+
+        
 
         // Start is called before the first frame update
         void Start()
@@ -62,7 +94,6 @@ namespace GMTK22
             if(atacando)
             {
                 float tempDistancia = Vector3.Distance(attacker.position, receiver.position);
-                this.Log(tempDistancia);
                 if(tempDistancia > 1)
                 {
                     attacker.position = Vector3.Lerp(attacker.position, receiver.position, Time.deltaTime * AttackSpeedMultiplier);
@@ -70,7 +101,8 @@ namespace GMTK22
                 else
                 {
                     atacando = false;
-                    recieverStats?.ReceberDano(attackerStats.Damage);
+
+                    receiverStats.ReceberDano(10);
                 }
             }
             else
