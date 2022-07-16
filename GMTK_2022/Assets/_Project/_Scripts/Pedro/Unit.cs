@@ -1,4 +1,6 @@
 ﻿// maded by Pedro M Marangon
+using NaughtyAttributes;
+using PedroUtils;
 using UnityEngine;
 
 namespace GMTK22
@@ -10,12 +12,16 @@ namespace GMTK22
 
 		protected Transform target;
 		protected ActionManager manager;
+		[MinMaxSlider(1, 8), SerializeField] protected Vector2 damageRange = new Vector2(1, 2);
+		protected int damage;
 
 		private void Awake() => manager = FindObjectOfType<ActionManager>();
 
 		public abstract void SelectAction();
 
 		public abstract void SelectTarget();
+
+		protected void SetDamage() => damage = Mathf.RoundToInt(GetRandom.ValueInRange(damageRange));
 
 		protected Action GetAction(ActionType actionType) => actionType switch
 		{
