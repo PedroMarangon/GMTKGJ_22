@@ -7,12 +7,12 @@ namespace GMTK22
 	{
 		protected Transform target;
 		protected Transform transform;
-		protected ActionManager manager;
+		protected GameManager manager;
 
 		public Action(Transform transform)
 		{
 			this.transform = transform;
-			manager = Object.FindObjectOfType<ActionManager>();
+			manager = Object.FindObjectOfType<GameManager>();
 		}
 
 		public abstract void Execute();

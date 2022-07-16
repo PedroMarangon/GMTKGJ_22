@@ -11,13 +11,8 @@ using static GMTK22.Unit;
 
 namespace GMTK22
 {
-	public class ActionManager : MonoBehaviour
+	public class GameManager : MonoBehaviour
     {
-        public enum MacroState
-		{
-            DMTurn,
-            PlayersTurn
-		}
         public enum MicroState
 		{
             None,
@@ -30,7 +25,6 @@ namespace GMTK22
 		[SerializeField] private Alien crntAlien;
 		[SerializeField] private List<Transform> aliens, robots;
 		[SerializeField] private Button d20Btn;
-		private MacroState macroState = MacroState.DMTurn;
         private MicroState microState = MicroState.None;
 		private attackEnemy attackManager;
 
@@ -44,13 +38,11 @@ namespace GMTK22
 
 		private void Update()
         {
-            if (macroState == MacroState.PlayersTurn) return;
 			if (!Mouse.current.leftButton.wasPressedThisFrame) return;
 
 			switch (microState)
 			{
 				case MicroState.None: SelectAlien(); break;
-				//case MicroState.SelectingAction: SetAction();break;
 				case MicroState.SelectingTarget: SelectTarget(); break;
 				default: break;
 			}
@@ -91,8 +83,8 @@ namespace GMTK22
 			D20 = Random.Range(0, 20) + 1;
 			this.Log($"D20: {D20}");
 
-			var alienStats = crntAlien.GetComponent<characterStats>();
-			//TODO: Check value
+			crntAlien.ExecuteAction();
+			StartCoroutine(nameof(AlienAction));
 		}
 
 		public void EnableD20() => d20Btn.interactable = true;
@@ -100,7 +92,7 @@ namespace GMTK22
 
 		public void GoToTargetState()
 		{
-			this.Log($"Selected action on {macroState}");
+			this.Log($"Selected action");
 			microState = MicroState.SelectingTarget;
 		}
 
@@ -111,13 +103,42 @@ namespace GMTK22
 			list.OrderBy(x => Random.value);
 			foreach (var rbt in robots)
 			{
+				rbt.Log($"Starting action loop...");
 				Robot robot = rbt.GetComponent<Robot>();
 				robot.SelectAction();
 				while (attackManager.isRunning) yield return null;
+				rbt.Log($"Finished action loop");
+				yield return new WaitForSeconds(1f);
 			}
 			yield break;
 		}
 
+		private IEnumerator AlienAction()
+		{
+			while (attackManager.isRunning) yield return null;
+			crntAlien = null;
+			
+			if(HasAllTheAliensFinishedAttacking())
+			{
+				yield return StartCoroutine(nameof(RobotsTurn));
+				foreach (var aln in aliens)
+				{
+					var alien = aln.GetComponent<Alien>();
+					alien.ResetUnit();
+				}
+			}
+
+
+			bool HasAllTheAliensFinishedAttacking()
+			{
+				foreach (var aln in aliens)
+				{
+					var alien = aln.GetComponent<Alien>();
+					if (!alien.HasFinished) return false;
+				}
+				return true;
+			}
+		}
 
 
 		private void SelectTarget()
@@ -135,8 +156,14 @@ namespace GMTK22
 
 		private void SelectAlien()
 		{
+			if (crntAlien != null) return;
 			Collider2D input = GetObjectOnMouse(whatIsAlien);
 			if (input == null) return;
+
+
+			if (!input.TryGetComponent(out Alien alien) || alien.HasFinished) return;
+			
+
 			this.Log($"Selecting alien {input.transform.name}");
 			crntAlien = input.GetComponent<Alien>();
 

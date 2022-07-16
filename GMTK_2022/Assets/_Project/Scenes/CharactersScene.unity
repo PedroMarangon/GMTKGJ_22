@@ -218,6 +218,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1100149003}
+        m_TargetAssemblyTypeName: GMTK22.ActionManager, Assembly-CSharp
+        m_MethodName: DisableD20
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &29653852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,7 +321,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2387814129089487194, guid: e0278e121d75cfd4d9012373f0ffc7b3, type: 3}
       propertyPath: m_Name
-      value: Enemy
+      value: Enemy_Mid
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0278e121d75cfd4d9012373f0ffc7b3, type: 3}
@@ -544,7 +556,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7846948176316797779, guid: 2b2b5cd40e2f46e43b2c1585cb698fd4, type: 3}
       propertyPath: m_Name
-      value: Character
+      value: Character_Bot
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b2b5cd40e2f46e43b2c1585cb698fd4, type: 3}
@@ -835,7 +847,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7846948176316797779, guid: 2b2b5cd40e2f46e43b2c1585cb698fd4, type: 3}
       propertyPath: m_Name
-      value: Character
+      value: Character_Mid
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b2b5cd40e2f46e43b2c1585cb698fd4, type: 3}
@@ -892,7 +904,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2387814129089487194, guid: e0278e121d75cfd4d9012373f0ffc7b3, type: 3}
       propertyPath: m_Name
-      value: Enemy
+      value: Enemy_Bot
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0278e121d75cfd4d9012373f0ffc7b3, type: 3}
@@ -949,7 +961,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2387814129089487194, guid: e0278e121d75cfd4d9012373f0ffc7b3, type: 3}
       propertyPath: m_Name
-      value: Enemy
+      value: Enemy_Top
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0278e121d75cfd4d9012373f0ffc7b3, type: 3}
@@ -1078,7 +1090,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7846948176316797779, guid: 2b2b5cd40e2f46e43b2c1585cb698fd4, type: 3}
       propertyPath: m_Name
-      value: Character
+      value: Character_Top
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b2b5cd40e2f46e43b2c1585cb698fd4, type: 3}

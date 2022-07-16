@@ -1,6 +1,7 @@
 ﻿// maded by Pedro M Marangon
 using NaughtyAttributes;
 using PedroUtils;
+using UnityEngine;
 
 namespace GMTK22
 {
@@ -11,7 +12,7 @@ namespace GMTK22
 
 		public override void SelectAction()
 		{
-			var action = GetRandom.Boolean() ? ActionType.Attack : ActionType.Heal;
+			var action = Random.value > 0.7f ? ActionType.Attack : ActionType.Heal;
 			selectedAction = GetAction(action);
 			group = action == ActionType.Attack ? TargetGroup.Aliens : TargetGroup.Robots;
 			SelectTarget();
@@ -22,6 +23,7 @@ namespace GMTK22
 			target = manager.SelectRandomTarget(group);
 
 			selectedAction.SetTarget(target);
+			transform.Log($"Set action {selectedAction.GetType().ToString()} on target {target.name}");
 			selectedAction.Execute();
 		}
 		public override void ResetUnit() => selectedAction = null;

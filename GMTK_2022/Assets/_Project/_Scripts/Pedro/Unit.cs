@@ -11,12 +11,12 @@ namespace GMTK22
 		public enum ActionType { None, Attack, Heal }
 
 		protected Transform target;
-		protected ActionManager manager;
+		protected GameManager manager;
 		protected characterStats stats;
 
 		private void Awake()
 		{
-			manager = FindObjectOfType<ActionManager>();
+			manager = FindObjectOfType<GameManager>();
 			stats = GetComponent<characterStats>();
 		}
 

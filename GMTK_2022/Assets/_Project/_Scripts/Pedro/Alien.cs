@@ -18,6 +18,13 @@ namespace GMTK22
 
 		public override void SelectAction() => actionList.Activate();
 
+		public void ExecuteAction()
+		{
+			var action = GetAction(CrntAction);
+			action.SetTarget(target);
+			action.Execute();
+		}
+
 		public void SetAction(int type)
 		{
 			action = (ActionType)type;
@@ -36,6 +43,7 @@ namespace GMTK22
 		{
 			action = ActionType.None;
 			hasFinished = false;
+			target = null;
 		}
 	}
 }
