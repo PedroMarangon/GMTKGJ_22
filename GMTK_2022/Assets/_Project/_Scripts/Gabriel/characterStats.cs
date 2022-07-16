@@ -14,14 +14,14 @@ namespace GMTK22
         [SerializeField] int health = 20;
 
 
-        [SerializeField] int valorMinimoTaunt = 0;
-        [SerializeField] int valorMinimoHeal = 14;
-        [SerializeField] int valorMinimoAtaque = 4; 
+        public int valorMinimoTaunt = 0;
+        public int valorMinimoHeal = 14;
+        public int valorMinimoAtaque = 4; 
 
         // Função que faz com que o personagem receba dano
         public bool ReceberDano(int valorDado)
         {
-            if(valorDado > valorMinimoDado)
+            if(valorDado > valorMinimoAtaque)
             {
                 health -= valorDado;
                 health = Mathf.Clamp(health, 0, max_health);
