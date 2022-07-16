@@ -4,6 +4,8 @@ using PedroUtils;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using static GMTK22.Unit;
 
 namespace GMTK22
 {
@@ -22,13 +24,15 @@ namespace GMTK22
 		}
 
 		[SerializeField] private LayerMask whatIsAlien, whatIsRobot;
-		[ReadOnly, SerializeField] private Transform crntTarget, crntAlien;
+		[ReadOnly, SerializeField] private Transform crntTarget;
+		[SerializeField] private Alien crntAlien;
 		[SerializeField] private List<Transform> aliens, robots;
-		[SerializeField] private Transform actionPanel;
-		[SerializeField] private float distance = 0.75f;
+		[SerializeField] private Button d20Btn;
 
 		private MacroState macroState = MacroState.DMTurn;
         private MicroState microState = MicroState.None;
+
+		private void Awake() => DisableD20();
 
 		private void Update()
         {
@@ -37,13 +41,14 @@ namespace GMTK22
 
 			switch (microState)
 			{
-				case MicroState.None: SelectAlien();break;
-				case MicroState.SelectingAction: SetAction();break;
-				case MicroState.SelectingTarget: SelectTarget();break;
+				case MicroState.None: SelectAlien(); break;
+				//case MicroState.SelectingAction: SetAction();break;
+				case MicroState.SelectingTarget: SelectTarget(); break;
+				default: break;
 			}
 		}
 
-		public Transform SelectRandomTarget(Unit.TargetGroup targetGroup)
+		public Transform SelectRandomTarget(TargetGroup targetGroup)
 		{
 			return targetGroup switch
 			{
@@ -53,13 +58,23 @@ namespace GMTK22
 			};
 		}
 
-		public List<Transform> GetAllTargets(Unit.TargetGroup targetGroup)
+		public List<Transform> GetAllTargets(TargetGroup targetGroup)
 		{
 			return targetGroup switch
 			{
 				Unit.TargetGroup.Aliens => aliens,
 				Unit.TargetGroup.Robots => robots,
 				_ => new List<Transform>()
+			};
+		}
+
+		public Collider2D GetMouseObjectBasedOnAction(ActionType action)
+		{
+			return crntAlien.CrntAction switch
+			{
+				ActionType.Attack => GetObjectOnMouse(whatIsRobot),
+				ActionType.Heal => GetObjectOnMouse(whatIsAlien),
+				_ => throw new System.Exception($"Current alien's {crntAlien} action is {crntAlien.CrntAction} and it is NOT implemented")
 			};
 		}
 
@@ -71,12 +86,25 @@ namespace GMTK22
 			var alienStats = crntAlien.GetComponent<characterStats>();
 		}
 
+		public void EnableD20() => d20Btn.interactable = true;
+		public void DisableD20() => d20Btn.interactable = false;
+
+		public void GoToTargetState()
+		{
+			this.Log($"Selected action on {macroState}");
+			microState = MicroState.SelectingTarget;
+		}
+
 		private void SelectTarget()
 		{
-			Collider2D input = GetObjectOnMouse(whatIsRobot);
+			Collider2D input = GetMouseObjectBasedOnAction(crntAlien.CrntAction);
 			if (input == null) return;
-			crntTarget = input.transform;
-			this.Log($"Selecting robot {input.transform.name}");
+
+			crntAlien.SelectTarget();
+
+			var targetGroup = crntAlien.CrntAction == ActionType.Attack ? TargetGroup.Robots : TargetGroup.Aliens;
+			this.Log($"Selecting target {input.transform.name} from target group {targetGroup}");
+
 			microState = MicroState.None;
 		}
 
@@ -85,17 +113,10 @@ namespace GMTK22
 			Collider2D input = GetObjectOnMouse(whatIsAlien);
 			if (input == null) return;
 			this.Log($"Selecting alien {input.transform.name}");
-			crntAlien = input.transform;
+			crntAlien = input.GetComponent<Alien>();
+
 			microState = MicroState.SelectingAction;
-
-			actionPanel.transform.position = Helpers.SetUIPositionBasedOnObject(crntAlien.transform.position, Vector2.left * distance);
-			actionPanel.gameObject.Activate();
-		}
-
-		private void SetAction()
-		{
-			this.Log($"Selecting action on {macroState}");
-			microState = MicroState.SelectingTarget;
+			crntAlien.SelectAction();
 		}
 
 		private Collider2D GetObjectOnMouse(LayerMask mask)

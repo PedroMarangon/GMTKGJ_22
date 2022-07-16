@@ -8,7 +8,7 @@ namespace GMTK22
 	public abstract class Unit : MonoBehaviour
 	{
 		public enum TargetGroup { Aliens, Robots }
-		public enum ActionType { Attack, Heal, Taunt }
+		public enum ActionType { None, Attack, Heal }
 
 		protected Transform target;
 		protected ActionManager manager;
@@ -28,7 +28,6 @@ namespace GMTK22
 		{
 			ActionType.Attack => new AttackAction(transform),
 			ActionType.Heal => new HealAction(transform),
-			ActionType.Taunt => new TauntAction(transform),
 			_ => new NullAction(transform)
 		};
 	}

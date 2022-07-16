@@ -42,17 +42,6 @@ namespace GMTK22
 		}
 	}
 
-	public class TauntAction : Action
-	{
-		public TauntAction(Transform transform) : base(transform) { }
-
-		public override void Execute()
-		{
-			var atkManager = Object.FindObjectOfType<attackEnemy>();
-			//TODO: Taunt
-		}
-	}
-
 	public class NullAction : Action
 	{
 		public NullAction(Transform transform) : base(transform) { }

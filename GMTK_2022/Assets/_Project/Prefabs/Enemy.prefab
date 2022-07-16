@@ -133,7 +133,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9944fb0619c033c4a94d3e75d610ae7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageRange: {x: 1, y: 8}
 --- !u!114 &2137623928621443575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,7 +146,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 3914116631139656827}
-  m_health: 100
+  max_health: 20
+  health: 20
+  damageRange: {x: 1, y: 8}
+  multiplier: 1
+  valorMinimoTaunt: 0
+  valorMinimoHeal: 14
+  valorMinimoAtaque: 4
 --- !u!61 &2387814129089487192
 BoxCollider2D:
   m_ObjectHideFlags: 0
