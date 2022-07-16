@@ -21,8 +21,8 @@ namespace GMTK22
 		}
 
 		public abstract void SelectAction();
-
 		public abstract void SelectTarget();
+		public abstract void ResetUnit();
 
 		protected Action GetAction(ActionType actionType) => actionType switch
 		{

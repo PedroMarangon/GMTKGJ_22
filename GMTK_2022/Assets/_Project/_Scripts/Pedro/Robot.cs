@@ -17,30 +17,13 @@ namespace GMTK22
 			SelectTarget();
 		}
 
-		[Button]
-		private void TestAtk()
-		{
-			selectedAction = GetAction(ActionType.Attack);
-			group = TargetGroup.Aliens;
-			SelectTarget();
-		}
-
-		[Button]
-		private void TestHeal()
-		{
-			selectedAction = GetAction(ActionType.Heal);
-			group = TargetGroup.Robots;
-			SelectTarget();
-		}
-
 		public override void SelectTarget()
 		{
 			target = manager.SelectRandomTarget(group);
 
-			stats.SetDamage();
-
-			selectedAction.SetTargetAndDamage(target, stats.Damage);
+			selectedAction.SetTarget(target);
 			selectedAction.Execute();
 		}
+		public override void ResetUnit() => selectedAction = null;
 	}
 }

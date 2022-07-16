@@ -1,7 +1,9 @@
 // maded by Pedro M Marangon
 using NaughtyAttributes;
 using PedroUtils;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -28,11 +30,17 @@ namespace GMTK22
 		[SerializeField] private Alien crntAlien;
 		[SerializeField] private List<Transform> aliens, robots;
 		[SerializeField] private Button d20Btn;
-
 		private MacroState macroState = MacroState.DMTurn;
         private MicroState microState = MicroState.None;
+		private attackEnemy attackManager;
 
-		private void Awake() => DisableD20();
+		public int D20 { get; private set; } = 0;
+
+		private void Awake()
+		{
+			attackManager = FindObjectOfType<attackEnemy>();
+			DisableD20();
+		}
 
 		private void Update()
         {
@@ -80,10 +88,11 @@ namespace GMTK22
 
 		public void RollD20()
 		{
-			int d20 = Random.Range(0, 20) + 1;
-			this.Log($"D20: {d20}");
+			D20 = Random.Range(0, 20) + 1;
+			this.Log($"D20: {D20}");
 
 			var alienStats = crntAlien.GetComponent<characterStats>();
+			//TODO: Check value
 		}
 
 		public void EnableD20() => d20Btn.interactable = true;
@@ -94,6 +103,22 @@ namespace GMTK22
 			this.Log($"Selected action on {macroState}");
 			microState = MicroState.SelectingTarget;
 		}
+
+
+		private IEnumerator RobotsTurn()
+		{
+			var list = new List<Transform>(robots);
+			list.OrderBy(x => Random.value);
+			foreach (var rbt in robots)
+			{
+				Robot robot = rbt.GetComponent<Robot>();
+				robot.SelectAction();
+				while (attackManager.isRunning) yield return null;
+			}
+			yield break;
+		}
+
+
 
 		private void SelectTarget()
 		{

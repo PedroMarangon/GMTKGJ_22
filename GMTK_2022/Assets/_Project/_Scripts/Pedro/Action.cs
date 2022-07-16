@@ -7,17 +7,17 @@ namespace GMTK22
 	{
 		protected Transform target;
 		protected Transform transform;
-		protected int damage;
+		protected ActionManager manager;
 
-		public Action(Transform transform) => this.transform = transform;
+		public Action(Transform transform)
+		{
+			this.transform = transform;
+			manager = Object.FindObjectOfType<ActionManager>();
+		}
 
 		public abstract void Execute();
 
-		public void SetTargetAndDamage(Transform newTarget, int newDamage)
-		{
-			target = newTarget;
-			damage = newDamage;
-		}
+		public void SetTarget(Transform newTarget) => target = newTarget;
 	}
 
 	public class AttackAction : Action
@@ -27,7 +27,7 @@ namespace GMTK22
 		public override void Execute()
 		{
 			var atkManager = Object.FindObjectOfType<attackEnemy>();
-			atkManager.AtacarInimigo(transform, target, damage);
+			atkManager.AtacarInimigo(transform, target, manager.D20);
 		}
 	}
 
