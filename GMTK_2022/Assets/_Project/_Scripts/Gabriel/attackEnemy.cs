@@ -11,6 +11,8 @@ namespace GMTK22
         [SerializeField] bool atacando = false;
         [SerializeField] float AttackSpeedMultiplier = 1.0f;
 
+        public bool isRunning = false;
+
         //float lerpDeltaTime = 0.0f;
 
         Transform attacker;
@@ -23,6 +25,8 @@ namespace GMTK22
         // Função que chama para atacar inimigo
         public void AtacarInimigo(Transform inputAttacker, Transform inputReceiver, int valorDado)
         {
+            isRunning = true;
+
             attacker = inputAttacker;
             receiver = inputReceiver;
 
@@ -36,6 +40,8 @@ namespace GMTK22
 
         public void CurarAmigo(Transform inputCurandeiro, Transform inputCurado, int valorDado)
         {
+            isRunning = true;
+
             attacker = inputCurandeiro;
             receiver = inputCurado;
 
@@ -43,6 +49,7 @@ namespace GMTK22
             receiverStats = inputCurado.GetComponent<characterStats>();
 
             receiverStats.ReceberCura(valorDado);
+            isRunning = false;
         }
 
         public void TimeTaunt(List<Transform> amigos, int valorDado)
@@ -103,6 +110,7 @@ namespace GMTK22
                     atacando = false;
 
                     receiverStats.ReceberDano(10);
+                    isRunning = false;
                 }
             }
             else
@@ -111,6 +119,10 @@ namespace GMTK22
                 if(tempDistancia > 0.1f)
                 {
                     attacker.position = Vector3.Lerp(attacker.position, attackerStartPos, Time.deltaTime * AttackSpeedMultiplier);
+                }
+                else if(isRunning)
+                {
+                    isRunning = false;
                 }
             }
         }
