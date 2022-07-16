@@ -7,13 +7,13 @@ namespace GMTK22
 	{
 		protected Transform target;
 		protected Transform transform;
-		protected float damage;
+		protected int damage;
 
 		public Action(Transform transform) => this.transform = transform;
 
 		public abstract void Execute();
 
-		public void SetTargetAndDamage(Transform newTarget, float newDamage)
+		public void SetTargetAndDamage(Transform newTarget, int newDamage)
 		{
 			target = newTarget;
 			damage = newDamage;
@@ -28,6 +28,7 @@ namespace GMTK22
 		{
 			//TODO: Go to attack position
 			//TODO: Damage
+			
 		}
 	}
 
