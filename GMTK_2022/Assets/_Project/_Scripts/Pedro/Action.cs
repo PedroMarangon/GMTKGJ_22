@@ -27,8 +27,12 @@ namespace GMTK22
 		public override void Execute()
 		{
 			//TODO: Go to attack position
+
+			var atkManager = Object.FindObjectOfType<attackEnemy>();
+			atkManager.AtacarInimigo(transform, target, damage);
+
 			//TODO: Damage
-			
+
 		}
 	}
 

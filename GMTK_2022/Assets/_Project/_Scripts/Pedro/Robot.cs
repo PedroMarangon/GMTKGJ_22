@@ -1,4 +1,5 @@
 ﻿// maded by Pedro M Marangon
+using NaughtyAttributes;
 using PedroUtils;
 
 namespace GMTK22
@@ -13,6 +14,14 @@ namespace GMTK22
 			var action = GetRandom.Boolean() ? ActionType.Attack : ActionType.Heal;
 			selectedAction = GetAction(action);
 			group = action == ActionType.Attack ? TargetGroup.Aliens : TargetGroup.Robots;
+			SelectTarget();
+		}
+
+		[Button]
+		private void TestAtk()
+		{
+			selectedAction = GetAction(ActionType.Attack);
+			group = TargetGroup.Aliens;
 			SelectTarget();
 		}
 

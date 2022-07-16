@@ -12,10 +12,15 @@ namespace GMTK22
 
 		protected Transform target;
 		protected ActionManager manager;
+		protected attackEnemy atkManager;
 		[MinMaxSlider(1, 8), SerializeField] protected Vector2 damageRange = new Vector2(1, 2);
 		protected int damage;
 
-		private void Awake() => manager = FindObjectOfType<ActionManager>();
+		private void Awake()
+		{
+			manager = FindObjectOfType<ActionManager>();
+			atkManager = FindObjectOfType<attackEnemy>();
+		}
 
 		public abstract void SelectAction();
 

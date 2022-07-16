@@ -53,11 +53,22 @@ namespace GMTK22
 			};
 		}
 
+		public List<Transform> GetAllTargets(Unit.TargetGroup targetGroup)
+		{
+			return targetGroup switch
+			{
+				Unit.TargetGroup.Aliens => aliens,
+				Unit.TargetGroup.Robots => robots,
+				_ => new List<Transform>()
+			};
+		}
+
 		public void RollD20()
 		{
 			int d20 = Random.Range(0, 20) + 1;
 			this.Log($"D20: {d20}");
-			//varcrntAlien
+
+			var alienStats = crntAlien.GetComponent<characterStats>();
 		}
 
 		private void SelectTarget()
