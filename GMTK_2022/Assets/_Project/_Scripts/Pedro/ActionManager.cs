@@ -24,7 +24,6 @@ namespace GMTK22
 		[SerializeField] private LayerMask whatIsAlien, whatIsRobot;
 		[ReadOnly, SerializeField] private Transform crntTarget, crntAlien;
 		[SerializeField] private List<Transform> aliens, robots;
-
 		[SerializeField] private Transform actionPanel;
 		[SerializeField] private float distance = 0.75f;
 
@@ -34,8 +33,7 @@ namespace GMTK22
 		private void Update()
         {
             if (macroState == MacroState.PlayersTurn) return;
-			this.Log($"Alien on mouse: {GetObjectOnMouse(whatIsAlien)}", $"Robot on mouse: {GetObjectOnMouse(whatIsRobot)}");
-            if (!Mouse.current.leftButton.wasPressedThisFrame) return;
+			if (!Mouse.current.leftButton.wasPressedThisFrame) return;
 
 			switch (microState)
 			{
@@ -53,6 +51,13 @@ namespace GMTK22
 				Unit.TargetGroup.Robots => GetRandom.ElementInList(robots),
 				_ => transform
 			};
+		}
+
+		public void RollD20()
+		{
+			int d20 = Random.Range(0, 20) + 1;
+			this.Log($"D20: {d20}");
+			//varcrntAlien
 		}
 
 		private void SelectTarget()
