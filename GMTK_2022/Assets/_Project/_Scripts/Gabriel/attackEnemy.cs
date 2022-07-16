@@ -29,6 +29,16 @@ namespace GMTK22
             atacando = true;
         }
 
+        public void CurarAmigo(Transform inputCurandeiro, Transform inputCurado, int valorDado)
+        {
+            
+        }
+
+        public TimeTaunt(List<Transform> amigos, int valorDado)
+        {
+
+        }
+
 
         // Start is called before the first frame update
         void Start()

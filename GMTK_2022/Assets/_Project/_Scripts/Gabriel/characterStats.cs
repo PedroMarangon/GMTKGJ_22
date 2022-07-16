@@ -9,10 +9,8 @@ namespace GMTK22
     {
         [SerializeField] Transform healthBar;
 
-        
         [SerializeField] int max_health = 20;
         [SerializeField] int health = 20;
-
 
         public int valorMinimoTaunt = 0;
         public int valorMinimoHeal = 14;
@@ -33,6 +31,7 @@ namespace GMTK22
 
             return false;
         }
+
 
         void VidaAcompanharBarra()
         {
