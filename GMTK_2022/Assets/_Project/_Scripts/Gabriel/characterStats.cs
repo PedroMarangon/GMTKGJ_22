@@ -1,6 +1,7 @@
 using NaughtyAttributes;
 using PedroUtils;
 using UnityEngine;
+using System.Collections;
 
 namespace GMTK22
 {
@@ -24,6 +25,12 @@ namespace GMTK22
             {
                 health -= RollD8();
                 health = Mathf.Clamp(health, 0, max_health);
+
+                if(health <= 0)
+                {
+                    StartCoroutine(AnimarMorte());
+                    Destroy(gameObject, 3);
+                }
 
                 //Código para ativar texto de dano aqui...
 
@@ -54,6 +61,15 @@ namespace GMTK22
             Vector3 targetBarra = new Vector3((float)health/(float)max_health, healthBar.localScale.y, healthBar.localScale.z);
 
             healthBar.localScale = Vector3.Lerp(barraAtual, targetBarra, Time.deltaTime * 2);            
+        }
+
+        IEnumerator AnimarMorte()
+        {
+            while(true)
+            {
+                yield return new WaitForSeconds(0.1f);
+                this.Log("First blink!");
+            }
         }
 
         void Update()

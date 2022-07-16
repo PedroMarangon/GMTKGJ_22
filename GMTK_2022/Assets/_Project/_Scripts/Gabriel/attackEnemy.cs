@@ -20,41 +20,46 @@ namespace GMTK22
 		private characterStats attackerStats;
 		private characterStats receiverStats;
 		Vector3 attackerStartPos;
+
+        int valorDado = 0;
         
 
         // Função que chama para atacar inimigo
-        public void AtacarInimigo(Transform inputAttacker, Transform inputReceiver, int valorDado)
+        public void AtacarInimigo(Transform inputAttacker, Transform inputReceiver, int inputValorDado)
         {
-            isRunning = true;
+            if(!isRunning)
+            {
+                valorDado = inputValorDado;
+                isRunning = true;
 
-            attacker = inputAttacker;
-            receiver = inputReceiver;
+                attacker = inputAttacker;
+                receiver = inputReceiver;
 
-            attackerStats = inputAttacker.GetComponent<characterStats>();
-            receiverStats = inputReceiver.GetComponent<characterStats>();
+                attackerStats = inputAttacker.GetComponent<characterStats>();
+                receiverStats = inputReceiver.GetComponent<characterStats>();
 
-            attackerStartPos = attacker.position;
+                attackerStartPos = attacker.position;
 
-            atacando = true;
+                atacando = true;
+            }
         }
 
-        public void CurarAmigo(Transform inputCurandeiro, Transform inputCurado, int valorDado)
+        public void CurarAmigo(Transform inputCurandeiro, Transform inputCurado, int inputValorDado)
         {
-            isRunning = true;
+            if(!isRunning)
+            {
+                valorDado = inputValorDado;
+                isRunning = true;
 
-            attacker = inputCurandeiro;
-            receiver = inputCurado;
+                attacker = inputCurandeiro;
+                receiver = inputCurado;
 
-            attackerStats = inputCurandeiro.GetComponent<characterStats>();
-            receiverStats = inputCurado.GetComponent<characterStats>();
+                attackerStats = inputCurandeiro.GetComponent<characterStats>();
+                receiverStats = inputCurado.GetComponent<characterStats>();
 
-            receiverStats.ReceberCura(valorDado);
-            isRunning = false;
-        }
-
-        public void TimeTaunt(List<Transform> amigos, int valorDado)
-        {
-
+                receiverStats.ReceberCura(valorDado);
+                isRunning = false;
+            }
         }
 
         [Button]
@@ -66,7 +71,7 @@ namespace GMTK22
             bonecoTeste2 = GameObject.Find("Enemy").transform;
             bonecoTeste1 = GameObject.Find("Character").transform;
 
-            AtacarInimigo(bonecoTeste1, bonecoTeste2, 0);
+            AtacarInimigo(bonecoTeste1, bonecoTeste2, 20);
         }
 
         [Button]
@@ -79,20 +84,6 @@ namespace GMTK22
             bonecoTeste1 = GameObject.Find("Character").transform;
 
             CurarAmigo(bonecoTeste1, bonecoTeste2, 20);
-        }
-
-        
-
-        // Start is called before the first frame update
-        void Start()
-        {
-            Transform bonecoTeste1;
-            Transform bonecoTeste2;
-
-            bonecoTeste2 = GameObject.Find("Enemy").transform;
-            bonecoTeste1 = GameObject.Find("Character").transform;
-
-            AtacarInimigo(bonecoTeste1, bonecoTeste2, 0);
         }
 
         // Update is called once per frame
@@ -108,12 +99,10 @@ namespace GMTK22
                 else
                 {
                     atacando = false;
-
-                    receiverStats.ReceberDano(10);
-                    isRunning = false;
+                    receiverStats.ReceberDano(valorDado);
                 }
             }
-            else
+            else if(isRunning)
             {
                 float tempDistancia = Vector3.Distance(attacker.position, attackerStartPos);
                 if(tempDistancia > 0.1f)
