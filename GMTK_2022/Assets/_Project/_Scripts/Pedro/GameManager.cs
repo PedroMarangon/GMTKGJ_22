@@ -100,6 +100,7 @@ namespace GMTK22
 			microState = MicroState.SelectingTarget;
 		}
 
+		public void SetTarget(Transform target) => crntTarget = target;
 
 		private IEnumerator RobotsTurn()
 		{

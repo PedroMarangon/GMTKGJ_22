@@ -35,6 +35,7 @@ namespace GMTK22
 		public override void SelectTarget()
 		{
 			target = manager.GetMouseObjectBasedOnAction(action).transform;
+			manager.SetTarget(target);
 			manager.EnableD20();
 			hasFinished = true;
 		}
