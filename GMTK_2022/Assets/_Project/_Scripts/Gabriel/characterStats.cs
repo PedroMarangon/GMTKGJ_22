@@ -29,7 +29,7 @@ namespace GMTK22
                 int dmg = RollD8();
 
                 health -= dmg;
-                DmgManager.MostrarDano(dmg, transform);
+                DmgManager.MostrarDano(-dmg, transform);
                 health = Mathf.Clamp(health, 0, max_health);
 
                 if(health <= 0)
@@ -41,6 +41,10 @@ namespace GMTK22
                 //Código para ativar texto de dano aqui...
 
                 return true;
+            }
+            else
+            {
+                DmgManager.MostrarDano(0, transform);
             }
 
             return false;
@@ -57,9 +61,11 @@ namespace GMTK22
                 DmgManager.MostrarDano(healValue, transform);
                 health = Mathf.Clamp(health, 0, max_health);
 
-                //Código para ativar texto de cura aqui...
-
                 return true;
+            }
+            else
+            {
+                DmgManager.MostrarDano(0, transform);
             }
 
             return false;

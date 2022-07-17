@@ -20,8 +20,14 @@ namespace GMTK22
 
             temp = Instantiate(prefab_popup.transform, v3Temp, Quaternion.identity, gameObject.transform);
 
-            temp.GetComponent<TMP_Text>().color = (dano > 0 ? Color.red : Color.green);
-            temp.GetComponent<TMP_Text>().text = (dano > 0 ? "-" + dano.ToString() : "+" + dano.ToString());
+            temp.GetComponent<TMP_Text>().color = (dano < 0 ? Color.red : Color.green);
+            temp.GetComponent<TMP_Text>().text = (dano < 0 ? dano.ToString() : "+" + dano.ToString());
+
+            if(dano == 0)
+            {
+                temp.GetComponent<TMP_Text>().color = Color.white;
+                temp.GetComponent<TMP_Text>().text = "Uneffective";
+            }
         }
 
         // Start is called before the first frame update
