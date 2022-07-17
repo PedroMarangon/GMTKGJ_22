@@ -33,7 +33,7 @@ namespace GMTK22
 		{
 			ActionType.Attack => atkAction,
 			ActionType.Heal => healAction,
-			_ => new NullAction(transform)
+			_ => throw new System.Exception($"Provided action type is non-existent")
 		};
 	}
 }

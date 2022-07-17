@@ -39,13 +39,7 @@ namespace GMTK22
 		{
 			var atkManager = Object.FindObjectOfType<attackEnemy>();
 			//TODO: Heal
+			atkManager.CurarAmigo(transform, target, manager.D20);
 		}
-	}
-
-	public class NullAction : Action
-	{
-		public NullAction(Transform transform) : base(transform) { }
-
-		public override void Execute() => throw new System.NotImplementedException("Selected null action");
 	}
 }

@@ -58,7 +58,7 @@ namespace GMTK22
 			{
 				TargetGroup.Aliens => GetRandom.Element(aliens),
 				TargetGroup.Robots => GetRandom.Element(robots),
-				_ => transform
+				_ => throw new System.Exception($"Target Group is non-existent: {(int)targetGroup}")
 			};
 		}
 
@@ -120,6 +120,7 @@ namespace GMTK22
 		private IEnumerator AlienAction()
 		{
 			while (attackManager.isRunning) yield return null;
+			crntTarget = null;
 			crntAlien = null;
 			
 			if(HasAllTheAliensFinishedAttacking())
