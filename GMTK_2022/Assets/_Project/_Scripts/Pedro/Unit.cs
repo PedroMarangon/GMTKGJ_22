@@ -26,7 +26,6 @@ namespace GMTK22
 			healAction = new HealAction(transform);
 
 			bool red = GetRandom.Boolean();
-			this.Log($"Is red? {red}");
 			GetComponentInChildren<Animator>().runtimeAnimatorController = red ? redAnimator : blueAnimator;
 
 		}

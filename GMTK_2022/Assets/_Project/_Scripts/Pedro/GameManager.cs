@@ -105,7 +105,7 @@ namespace GMTK22
 			{
 				TargetGroup.Aliens => aliens,
 				TargetGroup.Robots => robots,
-				_ => new List<Transform>()
+				_ => throw new System.Exception("Provided target group is non-existent")
 			};
 		}
 
@@ -144,11 +144,7 @@ namespace GMTK22
 		public void PlayActionSound() => selectActionSound.PlayAudio();
 		#endregion
 
-		public void GoToTargetState()
-		{
-			this.Log($"Selected action");
-			microState = MicroState.SelectingTarget;
-		}
+		public void GoToTargetState() => microState = MicroState.SelectingTarget;
 
 		public void SetTarget(Transform target) => crntTarget = target;
 
@@ -160,11 +156,9 @@ namespace GMTK22
 			foreach (var rbt in robots)
 			{
 				aliens.RemoveAll(x => x == null);
-				rbt.Log($"Starting action loop...");
 				Robot robot = rbt.GetComponent<Robot>();
 				robot.SelectAction();
 				while (attackManager.isRunning) yield return null;
-				rbt.Log($"Finished action loop");
 				robot.Disable();
 				yield return new WaitForSeconds(1f);
 			}
@@ -214,9 +208,6 @@ namespace GMTK22
 			crntAlien.SelectTarget();
 			PlayUnitSound();
 
-			var targetGroup = crntAlien.CrntAction == ActionType.Attack ? TargetGroup.Robots : TargetGroup.Aliens;
-			this.Log($"Selecting target {input.transform.name} from target group {targetGroup}");
-
 			microState = MicroState.None;
 		}
 
@@ -228,7 +219,6 @@ namespace GMTK22
 			if (input == null) return;
 			if (!input.TryGetComponent(out Alien alien) || alien.HasFinished) return;
 			
-			this.Log($"Selecting alien {input.transform.name}");
 			crntAlien = alien;
 			PlayUnitSound();
 

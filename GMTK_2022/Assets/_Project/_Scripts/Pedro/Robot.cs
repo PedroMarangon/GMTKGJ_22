@@ -23,7 +23,6 @@ namespace GMTK22
 			target = manager.SelectRandomTarget(group);
 
 			selectedAction.SetTarget(target);
-			transform.Log($"Set action {selectedAction.GetType().ToString()} on target {target.name}");
 			selectedAction.Execute();
 		}
 		public override void ResetUnit() => selectedAction = null;
