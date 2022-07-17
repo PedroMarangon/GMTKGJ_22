@@ -292,6 +292,7 @@ namespace GMTK22
 
 		private void OnGUI()
 		{
+			return;
 			var debugRect = new Rect(Vector2.zero, new Vector2(Screen.width, Screen.height));
 			var debugStyle = SetupStyle();
 

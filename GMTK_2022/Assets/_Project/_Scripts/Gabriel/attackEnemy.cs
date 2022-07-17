@@ -21,12 +21,20 @@ namespace GMTK22
 		private characterStats receiverStats;
         private GameManager manager;
 		Vector3 attackerStartPos;
-
         Animator attackerAnimador;
-
-        int valorDado = 0;
-        
+        int valorDado = 0;        
         int defaultLayer = 0;
+
+        public GameManager Manager
+		{
+            get
+			{
+                if (manager == null) manager = FindObjectOfType<GameManager>();
+                return manager;
+			}
+		}
+
+
         // Função que chama para atacar inimigo
         public void AtacarInimigo(Transform inputAttacker, Transform inputReceiver, int inputValorDado)
         {
@@ -70,30 +78,6 @@ namespace GMTK22
             }
         }
 
-        [Button]
-        public void TestarAtk()
-        {
-            Transform bonecoTeste1;
-            Transform bonecoTeste2;
-
-            bonecoTeste2 = GameObject.Find("Enemy").transform;
-            bonecoTeste1 = GameObject.Find("Character").transform;
-
-            AtacarInimigo(bonecoTeste1, bonecoTeste2, 20);
-        }
-
-        [Button]
-        public void TestarCura()
-        {
-            Transform bonecoTeste1;
-            Transform bonecoTeste2;
-
-            bonecoTeste2 = GameObject.Find("Enemy").transform;
-            bonecoTeste1 = GameObject.Find("Character").transform;
-
-            CurarAmigo(bonecoTeste1, bonecoTeste2, 20);
-        }
-
 		private void Start()
 		{
             manager = FindObjectOfType<GameManager>();
@@ -115,8 +99,8 @@ namespace GMTK22
                 {
                     attackerAnimador.Play("Attack");
 
-                    if(attackerStats.IsRobot) manager?.PlayAtkRobotSound();
-                    else manager?.PlayAtkAlienSound();
+                    if(attackerStats.IsRobot) Manager.PlayAtkRobotSound();
+                    else Manager.PlayAtkAlienSound();
 
                     atacando = false;
                 }
