@@ -21,9 +21,11 @@ namespace GMTK22
 		private characterStats receiverStats;
 		Vector3 attackerStartPos;
 
+        Animator attackerAnimador;
+
         int valorDado = 0;
         
-
+        int defaultLayer = 0;
         // Função que chama para atacar inimigo
         public void AtacarInimigo(Transform inputAttacker, Transform inputReceiver, int inputValorDado)
         {
@@ -40,6 +42,11 @@ namespace GMTK22
 
                 attackerStartPos = attacker.position;
 
+                defaultLayer = inputAttacker.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder;
+                inputAttacker.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = 999;
+
+                attackerAnimador = inputAttacker.GetChild(0).GetComponent<Animator>();
+                attackerAnimador.Play("Walking");
                 atacando = true;
             }
         }
@@ -86,24 +93,33 @@ namespace GMTK22
             CurarAmigo(bonecoTeste1, bonecoTeste2, 20);
         }
 
+
+        bool podeDarDano = true;
         // Update is called once per frame
         void Update()
         {
             if(atacando)
             {
                 float tempDistancia = Vector3.Distance(attacker.position, receiver.position);
-                if(tempDistancia > 1)
+                if(tempDistancia > 1.2f)
                 {
                     attacker.position = Vector3.Lerp(attacker.position, receiver.position, Time.deltaTime * AttackSpeedMultiplier);
                 }
                 else
                 {
+                    attackerAnimador.Play("Attack");
                     atacando = false;
-                    receiverStats.ReceberDano(valorDado);
                 }
             }
-            else if(isRunning)
+            else if(isRunning && !attackerAnimador.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
             {
+                if(podeDarDano)
+                {
+                    podeDarDano = false;
+                    receiverStats.ReceberDano(valorDado);
+                    attacker.GetChild(0).GetComponent<SpriteRenderer>().sortingOrder = defaultLayer;
+                }
+
                 float tempDistancia = Vector3.Distance(attacker.position, attackerStartPos);
                 if(tempDistancia > 0.1f)
                 {
@@ -111,6 +127,8 @@ namespace GMTK22
                 }
                 else if(isRunning)
                 {
+                    attackerAnimador.Play("Idle");
+                    podeDarDano = true;
                     isRunning = false;
                 }
             }
