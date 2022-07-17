@@ -242,6 +242,8 @@ namespace GMTK22
 
 		private void SetEndScreen(bool gameOver)
 		{
+			if(d20Btn) d20Btn.gameObject.Deactivate();
+
 			string text = gameOver ? gameOverText : winText;
 			Color color = gameOver ? gameOverColor : winColor;
 			endText.color = color;
