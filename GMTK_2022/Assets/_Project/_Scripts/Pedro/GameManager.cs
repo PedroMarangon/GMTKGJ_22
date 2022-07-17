@@ -56,8 +56,8 @@ namespace GMTK22
 		{
 			return targetGroup switch
 			{
-				Unit.TargetGroup.Aliens => GetRandom.ElementInList(aliens),
-				Unit.TargetGroup.Robots => GetRandom.ElementInList(robots),
+				TargetGroup.Aliens => GetRandom.Element(aliens),
+				TargetGroup.Robots => GetRandom.Element(robots),
 				_ => transform
 			};
 		}
@@ -66,13 +66,13 @@ namespace GMTK22
 		{
 			return targetGroup switch
 			{
-				Unit.TargetGroup.Aliens => aliens,
-				Unit.TargetGroup.Robots => robots,
+				TargetGroup.Aliens => aliens,
+				TargetGroup.Robots => robots,
 				_ => new List<Transform>()
 			};
 		}
 
-		public Collider2D GetMouseObjectBasedOnAction(ActionType action)
+		public Collider2D GetObjectOnMouse(ActionType action)
 		{
 			return crntAlien.CrntAction switch
 			{
@@ -90,7 +90,6 @@ namespace GMTK22
 			crntAlien.ExecuteAction();
 			StartCoroutine(nameof(AlienAction));
 		}
-
 		public void EnableD20() => d20Btn.interactable = true;
 		public void DisableD20() => d20Btn.interactable = false;
 
@@ -133,7 +132,6 @@ namespace GMTK22
 				}
 			}
 
-
 			bool HasAllTheAliensFinishedAttacking()
 			{
 				foreach (var aln in aliens)
@@ -145,10 +143,9 @@ namespace GMTK22
 			}
 		}
 
-
 		private void SelectTarget()
 		{
-			Collider2D input = GetMouseObjectBasedOnAction(crntAlien.CrntAction);
+			Collider2D input = GetObjectOnMouse(crntAlien.CrntAction);
 			if (input == null) return;
 
 			crntAlien.SelectTarget();
@@ -163,14 +160,12 @@ namespace GMTK22
 		{
 			if (crntAlien != null) return;
 			Collider2D input = GetObjectOnMouse(whatIsAlien);
+			
 			if (input == null) return;
-
-
 			if (!input.TryGetComponent(out Alien alien) || alien.HasFinished) return;
 			
-
 			this.Log($"Selecting alien {input.transform.name}");
-			crntAlien = input.GetComponent<Alien>();
+			crntAlien = alien;
 
 			microState = MicroState.SelectingAction;
 			crntAlien.SelectAction();

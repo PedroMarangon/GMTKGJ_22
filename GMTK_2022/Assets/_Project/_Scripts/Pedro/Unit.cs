@@ -13,11 +13,16 @@ namespace GMTK22
 		protected Transform target;
 		protected GameManager manager;
 		protected characterStats stats;
+		private AttackAction atkAction;
+		private HealAction healAction;
 
 		private void Awake()
 		{
 			manager = FindObjectOfType<GameManager>();
 			stats = GetComponent<characterStats>();
+
+			atkAction = new AttackAction(transform);
+			healAction = new HealAction(transform);
 		}
 
 		public abstract void SelectAction();
@@ -26,8 +31,8 @@ namespace GMTK22
 
 		protected Action GetAction(ActionType actionType) => actionType switch
 		{
-			ActionType.Attack => new AttackAction(transform),
-			ActionType.Heal => new HealAction(transform),
+			ActionType.Attack => atkAction,
+			ActionType.Heal => healAction,
 			_ => new NullAction(transform)
 		};
 	}
