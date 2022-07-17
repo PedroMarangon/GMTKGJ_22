@@ -7,12 +7,14 @@ namespace GMTK22
     public class selectedCircle : MonoBehaviour
     {
         GameManager gm;
+        attackEnemy funcaoAtacar;
         [SerializeField] SpriteRenderer targetSprite;
 
         // Start is called before the first frame update
         void Start()
         {
             gm = FindObjectOfType<GameManager>();
+            funcaoAtacar = FindObjectOfType<attackEnemy>();
         }
 
         // Update is called once per frame
@@ -20,14 +22,24 @@ namespace GMTK22
         {
             targetSprite.enabled = false;
 
-            if(gm.CrntTarget == gameObject.transform)
+            if(!funcaoAtacar.isRunning)
             {
-                targetSprite.enabled = true;
+                if(gm.CrntTarget == gameObject.transform)
+                {
+                    targetSprite.color = Color.red;
+                    if(gm.CrntTarget.GetComponent<Alien>() != null)
+                    {
+                        targetSprite.color = Color.blue;
+                    }
+                    targetSprite.enabled = true;
+                }
+                else if(gm.CrntAlien != null && gm.CrntAlien.transform == gameObject.transform)
+                {
+                    targetSprite.color = Color.green;
+                    targetSprite.enabled = true;
+                }
             }
-            // else if(gm.CrntAlien.gameObject.transform == gameObject.transform)
-            // {
-            //     targetSprite.GetComponent<SpriteRenderer>().enabled = true;
-            // }
+
         }
     }
 }

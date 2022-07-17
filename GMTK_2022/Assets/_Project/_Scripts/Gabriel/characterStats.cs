@@ -11,6 +11,9 @@ namespace GMTK22
 
         [SerializeField] int max_health = 20;
         [SerializeField] int health = 20;
+        [SerializeField] SpriteRenderer sprite;
+
+        [SerializeField] popupDmgManager DmgManager;
 
         public int valorMinimoTaunt = 0;
         public int valorMinimoHeal = 14;
@@ -23,14 +26,16 @@ namespace GMTK22
         {
             if(valorDado >= valorMinimoAtaque)
             {
-                this.LogSucess("Recebeu dano!");
-                health -= RollD8();
+                int dmg = RollD8();
+
+                health -= dmg;
+                DmgManager.MostrarDano(dmg, transform);
                 health = Mathf.Clamp(health, 0, max_health);
 
                 if(health <= 0)
                 {
                     StartCoroutine(AnimarMorte());
-                    Destroy(gameObject, 3);
+                    Destroy(gameObject, 0.9f);
                 }
 
                 //Código para ativar texto de dano aqui...
@@ -45,8 +50,11 @@ namespace GMTK22
         {
             if(valorDado >= valorMinimoHeal)
             {
-                this.LogSucess("Foi curado!");
-                health += RollD8();
+                //this.LogSucess("Foi curado!");
+                int healValue = RollD8();
+
+                health += healValue;
+                DmgManager.MostrarDano(healValue, transform);
                 health = Mathf.Clamp(health, 0, max_health);
 
                 //Código para ativar texto de cura aqui...
@@ -67,17 +75,48 @@ namespace GMTK22
 
         IEnumerator AnimarMorte()
         {
-            while(true)
-            {
-                yield return new WaitForSeconds(0.1f);
-                this.Log("First blink!");
-            }
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 0);
+            yield return new WaitForSeconds(0.15f);
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
+            yield return new WaitForSeconds(0.15f);
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 0);
+            yield return new WaitForSeconds(0.15f);
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
+            yield return new WaitForSeconds(0.15f);
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 0);
+            yield return new WaitForSeconds(0.15f);
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
+            yield return new WaitForSeconds(0.15f);
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 0);
+            yield return new WaitForSeconds(0.15f);
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
+            yield return new WaitForSeconds(0.15f);
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 0);
+            yield return new WaitForSeconds(0.15f);
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
+            yield return new WaitForSeconds(0.15f);
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 0);
+            yield return new WaitForSeconds(0.15f);
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
+            yield return new WaitForSeconds(0.15f);
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 0);
+            yield return new WaitForSeconds(0.15f);
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
+            yield return new WaitForSeconds(0.15f);
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 0);
+            yield return new WaitForSeconds(0.15f);
+            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
+            yield return new WaitForSeconds(0.15f);
+        }
+
+        void Start()
+        {
+            DmgManager = FindObjectOfType<popupDmgManager>();
         }
 
         void Update()
         {
             VidaAcompanharBarra();
         }
-
     }
 }

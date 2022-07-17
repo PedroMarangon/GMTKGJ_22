@@ -153,6 +153,7 @@ MonoBehaviour:
   valorMinimoTaunt: 0
   valorMinimoHeal: 14
   valorMinimoAtaque: 4
+  sprite: {fileID: 2387814129683203428}
 --- !u!61 &2387814129089487192
 BoxCollider2D:
   m_ObjectHideFlags: 0
