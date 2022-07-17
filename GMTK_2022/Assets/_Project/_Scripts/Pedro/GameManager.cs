@@ -60,7 +60,8 @@ namespace GMTK22
 		[HorizontalLine]
 		[SerializeField] private Audio selectUnitSound;
 		[SerializeField] private Audio noEffectSound;
-		[SerializeField] private Audio atkSound;
+		[SerializeField] private Audio atkRobotSound;
+		[SerializeField] private Audio atkAlienSound;
 		[SerializeField] private Audio healSound;
 		[SerializeField] private Audio selectActionSound;
 		private MicroState microState = MicroState.None;
@@ -135,7 +136,8 @@ namespace GMTK22
 		#endregion
 
 		#region Sounds
-		public void PlayAttackSound() => atkSound.PlayAudio();
+		public void PlayAtkAlienSound() => atkRobotSound.PlayAudio();
+		public void PlayAtkRobotSound() => atkAlienSound.PlayAudio();
 		public void PlayHealSound() => healSound.PlayAudio();
 		public void PlayUnitSound() => selectUnitSound.PlayAudio();
 		public void PlayNoEffectSound() => noEffectSound.PlayAudio();

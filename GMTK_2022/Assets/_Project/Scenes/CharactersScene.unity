@@ -1407,15 +1407,25 @@ MonoBehaviour:
     basePitch: 1
     pitchVariation: 0.1
     volumeVariation: 0.1
-  atkSound:
-    clips: []
+  atkRobotSound:
+    clips:
+    - {fileID: 8300000, guid: 0e36c79cc7700f140b9b76bfbdb8440d, type: 3}
+    source: {fileID: 292863132}
+    baseVolume: 1
+    basePitch: 1
+    pitchVariation: 0.1
+    volumeVariation: 0.1
+  atkAlienSound:
+    clips:
+    - {fileID: 8300000, guid: 5b7227d6eec737443a765d1c0bc9462b, type: 3}
     source: {fileID: 292863132}
     baseVolume: 1
     basePitch: 1
     pitchVariation: 0.1
     volumeVariation: 0.1
   healSound:
-    clips: []
+    clips:
+    - {fileID: 8300000, guid: 3d8d32b919843ae4ba8e1c2cde9f82de, type: 3}
     source: {fileID: 1778973948}
     baseVolume: 1
     basePitch: 1
