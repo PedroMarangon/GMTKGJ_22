@@ -1,6 +1,7 @@
 // maded by Pedro M Marangon
 using NaughtyAttributes;
 using PedroUtils;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using static GMTK22.Unit;
+using Random = UnityEngine.Random;
 
 namespace GMTK22
 {
-	[System.Serializable]
+	[Serializable]
 	public class Audio
 	{
 		[SerializeField] private List<AudioClip> clips;
@@ -32,7 +34,6 @@ namespace GMTK22
 			source.clip = GetRandom.Element(clips);
 			source.Play();
 		}
-
 	}
 
 	public class GameManager : MonoBehaviour
@@ -64,6 +65,14 @@ namespace GMTK22
 		[SerializeField] private Audio atkAlienSound;
 		[SerializeField] private Audio healSound;
 		[SerializeField] private Audio selectActionSound;
+		[Header("End Screen")]
+		[HorizontalLine]
+		[SerializeField] private GameObject endPanel;
+		[SerializeField] private TMP_Text endText;
+		[SerializeField] private string winText = "The RPG campaign finished because you TPK the players";
+		[SerializeField] private string gameOverText = "The players (robots) won this encounter";
+		[SerializeField] private Color winColor = Color.red, gameOverColor = Color.green;
+
 		private MicroState microState = MicroState.None;
 		private attackEnemy attackManager;
 
@@ -71,10 +80,28 @@ namespace GMTK22
 		public Transform CrntTarget => crntTarget;
 		public int D20 { get; private set; } = 0;
 
+		public static Action<bool, Transform> UnitIsDead;
+
 		private void Awake()
 		{
 			attackManager = FindObjectOfType<attackEnemy>();
 			DisableD20();
+			endPanel.Deactivate();
+			UnitIsDead += CheckDeadUnit;
+		}
+
+		private void CheckDeadUnit(bool isRobot, Transform unit)
+		{
+			if(isRobot)
+			{
+				robots.RemoveAll(x => x == unit);
+				//this.Log($"Robot count: {robots.Count}");
+				if (ListIsEmpty(robots)) SetEndScreen(false);
+				return;
+			}
+			aliens.RemoveAll(x => x == unit);
+			if (ListIsEmpty(aliens)) SetEndScreen(true);
+			return;
 		}
 
 		private void Update()
@@ -162,7 +189,13 @@ namespace GMTK22
 				robot.Disable();
 				yield return new WaitForSeconds(1f);
 			}
-			
+
+			if (ListIsEmpty(aliens))
+			{
+				//TODO: GameOver Screen
+				yield break;
+			}
+
 			foreach (var robot in robots)
 			{
 				aliens.RemoveAll(x => x == null);
@@ -180,6 +213,13 @@ namespace GMTK22
 			
 			if(HasAllTheAliensFinishedAttacking())
 			{
+
+				if (ListIsEmpty(robots))
+				{
+					//TODO: Victory Screen
+					yield break;
+				}
+
 				yield return StartCoroutine(nameof(RobotsTurn));
 				foreach (var aln in aliens)
 				{
@@ -198,6 +238,22 @@ namespace GMTK22
 				}
 				return true;
 			}
+		}
+
+		private void SetEndScreen(bool gameOver)
+		{
+			string text = gameOver ? gameOverText : winText;
+			Color color = gameOver ? gameOverColor : winColor;
+			endText.color = color;
+			endText.text = text;
+			endPanel.Activate();
+		}
+
+		private bool ListIsEmpty(List<Transform> robots)
+		{
+			List<Transform> copy = new List<Transform>(robots);
+			copy.RemoveAll(x => x == null);
+			return copy.Count <= 0;
 		}
 
 		private void SelectTarget()
@@ -233,5 +289,23 @@ namespace GMTK22
 
 			return Physics2D.OverlapPoint(worldPos, mask);
 		}
+
+		private void OnGUI()
+		{
+			var debugRect = new Rect(Vector2.zero, new Vector2(Screen.width, Screen.height));
+			var debugStyle = SetupStyle();
+
+			GUI.Label(debugRect, D20.ToString().ToSize(50).Color("cyan"), debugStyle);
+
+			GUIStyle SetupStyle()
+			{
+				var style = new GUIStyle();
+				style.alignment = TextAnchor.UpperLeft;
+				style.padding = new RectOffset(0, 10, 10, 0);
+				return style;
+			}
+
+		}
+
 	}
 }

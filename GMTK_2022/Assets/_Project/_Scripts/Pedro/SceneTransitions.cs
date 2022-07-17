@@ -12,11 +12,11 @@ namespace GMTK22
 		[Required, SerializeField] private FadeController fadeController;
 		[Scene, SerializeField] private int menuScene;
 		[Scene, SerializeField] private int gameplayScene;
-		private int _crntScene;
+		private int _crntScene = -1;
 
 		public int GameScene => gameplayScene;
 
-		private void Start()
+		private void Awake()
 		{
 			Time.timeScale = 1;
 
@@ -26,7 +26,7 @@ namespace GMTK22
 				if (!scene.name.Contains("Base")) _crntScene = scene.buildIndex;
 			}
 
-			if (SceneManager.sceneCount == 1) LoadScene(menuScene);
+			if (SceneManager.sceneCount == 1) LoadSceneAdditive(menuScene);
 		}
 
 		public void LoadScene(int scene)

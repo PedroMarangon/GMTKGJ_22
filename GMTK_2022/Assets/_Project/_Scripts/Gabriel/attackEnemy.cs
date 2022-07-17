@@ -38,8 +38,8 @@ namespace GMTK22
                 attacker = inputAttacker;
                 receiver = inputReceiver;
 
-                attackerStats = inputAttacker.GetComponent<characterStats>();
-                receiverStats = inputReceiver.GetComponent<characterStats>();
+                attackerStats = inputAttacker?.GetComponent<characterStats>();
+                receiverStats = inputReceiver?.GetComponent<characterStats>();
 
                 attackerStartPos = attacker.position;
 
@@ -115,8 +115,8 @@ namespace GMTK22
                 {
                     attackerAnimador.Play("Attack");
 
-                    if(attackerStats.IsRobot) manager.PlayAtkRobotSound();
-                    else manager.PlayAtkAlienSound();
+                    if(attackerStats.IsRobot) manager?.PlayAtkRobotSound();
+                    else manager?.PlayAtkAlienSound();
 
                     atacando = false;
                 }

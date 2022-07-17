@@ -37,7 +37,6 @@ namespace GMTK22
                 if(health <= 0)
                 {
                     StartCoroutine(AnimarMorte());
-                    Destroy(gameObject, 0.9f);
                 }
 
                 //Código para ativar texto de dano aqui...
@@ -86,38 +85,17 @@ namespace GMTK22
 
         IEnumerator AnimarMorte()
         {
-            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 0);
-            yield return new WaitForSeconds(0.15f);
-            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
-            yield return new WaitForSeconds(0.15f);
-            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 0);
-            yield return new WaitForSeconds(0.15f);
-            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
-            yield return new WaitForSeconds(0.15f);
-            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 0);
-            yield return new WaitForSeconds(0.15f);
-            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
-            yield return new WaitForSeconds(0.15f);
-            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 0);
-            yield return new WaitForSeconds(0.15f);
-            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
-            yield return new WaitForSeconds(0.15f);
-            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 0);
-            yield return new WaitForSeconds(0.15f);
-            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
-            yield return new WaitForSeconds(0.15f);
-            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 0);
-            yield return new WaitForSeconds(0.15f);
-            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
-            yield return new WaitForSeconds(0.15f);
-            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 0);
-            yield return new WaitForSeconds(0.15f);
-            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
-            yield return new WaitForSeconds(0.15f);
-            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 0);
-            yield return new WaitForSeconds(0.15f);
-            sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
-            yield return new WaitForSeconds(0.15f);
+            var delay = new WaitForSeconds(0.15f);
+			for (int i = 0; i < 7; i++)
+			{
+                sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 0);
+                yield return delay;
+                sprite.color = new Color(sprite.color.r, sprite.color.g, sprite.color.b, 1);
+                yield return delay;
+            }
+            GameManager.UnitIsDead.Invoke(isRobot, transform);
+
+            Destroy(gameObject);
         }
 
         void Start()
