@@ -1049,6 +1049,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3098612c360583a4d97ed6ad96521378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  redAnimator: {fileID: 9100000, guid: 96a3a73b18a2fe94c9ba563d9c861323, type: 2}
+  blueAnimator: {fileID: 9100000, guid: 96a3a73b18a2fe94c9ba563d9c861323, type: 2}
   actionList: {fileID: 1085567507014434173}
   hasFinished: 0
 --- !u!114 &-2590646343608911932

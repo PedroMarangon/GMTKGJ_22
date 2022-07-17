@@ -19,6 +19,7 @@ namespace GMTK22
         Transform receiver;
 		private characterStats attackerStats;
 		private characterStats receiverStats;
+        private GameManager manager;
 		Vector3 attackerStartPos;
 
         Animator attackerAnimador;
@@ -93,8 +94,13 @@ namespace GMTK22
             CurarAmigo(bonecoTeste1, bonecoTeste2, 20);
         }
 
+		private void Start()
+		{
+            manager = FindObjectOfType<GameManager>();
+		}
 
-        bool podeDarDano = true;
+
+		bool podeDarDano = true;
         // Update is called once per frame
         void Update()
         {
@@ -108,6 +114,10 @@ namespace GMTK22
                 else
                 {
                     attackerAnimador.Play("Attack");
+
+                    if(attackerStats.IsRobot) manager.PlayAtkRobotSound();
+                    else manager.PlayAtkAlienSound();
+
                     atacando = false;
                 }
             }

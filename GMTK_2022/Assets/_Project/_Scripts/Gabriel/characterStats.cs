@@ -8,17 +8,19 @@ namespace GMTK22
 	public class characterStats : MonoBehaviour
     {
         [SerializeField] Transform healthBar;
+		[SerializeField] private bool isRobot;
 
-        [SerializeField] int max_health = 20;
+		[SerializeField] int max_health = 20;
         [SerializeField] int health = 20;
         [SerializeField] SpriteRenderer sprite;
 
         [SerializeField] popupDmgManager DmgManager;
 
-        public int valorMinimoTaunt = 0;
         public int valorMinimoHeal = 14;
         public int valorMinimoAtaque = 4;
+        private GameManager gameManager;
 
+        public bool IsRobot => isRobot;
         int RollD8() => (Mathf.RoundToInt(GetRandom.ValueInRange(new Vector2(1, 8))));
         
         // Função que faz com que o personagem receba dano
@@ -45,6 +47,7 @@ namespace GMTK22
             else
             {
                 DmgManager.MostrarDano(0, transform);
+                gameManager.PlayNoEffectSound();
             }
 
             return false;
@@ -58,6 +61,7 @@ namespace GMTK22
                 int healValue = RollD8();
 
                 health += healValue;
+                gameManager.PlayHealSound();
                 DmgManager.MostrarDano(healValue, transform);
                 health = Mathf.Clamp(health, 0, max_health);
 
@@ -66,6 +70,7 @@ namespace GMTK22
             else
             {
                 DmgManager.MostrarDano(0, transform);
+                gameManager.PlayNoEffectSound();
             }
 
             return false;
@@ -118,6 +123,7 @@ namespace GMTK22
         void Start()
         {
             DmgManager = FindObjectOfType<popupDmgManager>();
+            gameManager = FindObjectOfType<GameManager>();
         }
 
         void Update()

@@ -15,6 +15,7 @@ namespace GMTK22
 		protected characterStats stats;
 		private AttackAction atkAction;
 		private HealAction healAction;
+		[SerializeField] private RuntimeAnimatorController redAnimator, blueAnimator;
 
 		private void Awake()
 		{
@@ -23,6 +24,9 @@ namespace GMTK22
 
 			atkAction = new AttackAction(transform);
 			healAction = new HealAction(transform);
+
+			GetComponentInChildren<Animator>().runtimeAnimatorController = GetRandom.Boolean() ? redAnimator : blueAnimator;
+
 		}
 
 		public abstract void SelectAction();
