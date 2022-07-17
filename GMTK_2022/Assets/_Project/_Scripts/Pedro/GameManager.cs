@@ -12,6 +12,29 @@ using static GMTK22.Unit;
 
 namespace GMTK22
 {
+	[System.Serializable]
+	public class Audio
+	{
+		[SerializeField] private List<AudioClip> clips;
+		[SerializeField] private AudioSource source;
+		[SerializeField] private float baseVolume = 1;
+		[SerializeField] private float basePitch = 1;
+		[Range(0,0.2f), SerializeField] private float pitchVariation = 0.1f;
+		[Range(0,0.2f), SerializeField] private float volumeVariation = 0.1f;
+
+		public void PlayAudio()
+		{
+			float volume = baseVolume + Random.Range(-volumeVariation, volumeVariation);
+			float pitch = basePitch + Random.Range(-pitchVariation, pitchVariation);
+
+			source.volume = volume;
+			source.pitch = pitch;
+			source.clip = GetRandom.Element(clips);
+			source.Play();
+		}
+
+	}
+
 	public class GameManager : MonoBehaviour
     {
         public enum MicroState
@@ -21,21 +44,30 @@ namespace GMTK22
             SelectingTarget
 		}
 
-		[SerializeField] private LayerMask whatIsAlien, whatIsRobot;
+		[Header("Units")]
+		[HorizontalLine]
+		[SerializeField] private LayerMask whatIsAlien;
+		[SerializeField] private LayerMask whatIsRobot;
 		[ReadOnly, SerializeField] private Transform crntTarget;
 		[SerializeField] private Alien crntAlien;
 		[SerializeField] private List<Transform> aliens, robots;
+		[HorizontalLine]
+		[Header("D20")]
 		[SerializeField] private Button d20Btn;
 		[SerializeField] private Animator d20Anim;
 		[SerializeField] private TMP_Text d20Text;
-
+		[Header("Audios")]
+		[HorizontalLine]
+		[SerializeField] private Audio selectUnitSound;
+		[SerializeField] private Audio noEffectSound;
+		[SerializeField] private Audio atkSound;
+		[SerializeField] private Audio healSound;
+		[SerializeField] private Audio selectActionSound;
 		private MicroState microState = MicroState.None;
 		private attackEnemy attackManager;
 
-
 		public Alien CrntAlien => crntAlien;
 		public Transform CrntTarget => crntTarget;
-
 		public int D20 { get; private set; } = 0;
 
 		private void Awake()
@@ -86,21 +118,29 @@ namespace GMTK22
 			};
 		}
 
+		#region D20
 		public void RollD20()
 		{
 			D20 = Random.Range(0, 20) + 1;
 			d20Anim.SetTrigger("Spin");
 			d20Text.text = $"{D20}";
 		}
-
+		public void EnableD20() => d20Btn.interactable = true;
+		public void DisableD20() => d20Btn.interactable = false;
 		public void ExecuteAction()
 		{
 			crntAlien.ExecuteAction();
 			StartCoroutine(nameof(AlienAction));
 		}
+		#endregion
 
-		public void EnableD20() => d20Btn.interactable = true;
-		public void DisableD20() => d20Btn.interactable = false;
+		#region Sounds
+		public void PlayAttackSound() => atkSound.PlayAudio();
+		public void PlayHealSound() => healSound.PlayAudio();
+		public void PlayUnitSound() => selectUnitSound.PlayAudio();
+		public void PlayNoEffectSound() => noEffectSound.PlayAudio();
+		public void PlayActionSound() => selectActionSound.PlayAudio();
+		#endregion
 
 		public void GoToTargetState()
 		{
@@ -170,6 +210,7 @@ namespace GMTK22
 			if (input == null) return;
 
 			crntAlien.SelectTarget();
+			PlayUnitSound();
 
 			var targetGroup = crntAlien.CrntAction == ActionType.Attack ? TargetGroup.Robots : TargetGroup.Aliens;
 			this.Log($"Selecting target {input.transform.name} from target group {targetGroup}");
@@ -187,6 +228,7 @@ namespace GMTK22
 			
 			this.Log($"Selecting alien {input.transform.name}");
 			crntAlien = alien;
+			PlayUnitSound();
 
 			microState = MicroState.SelectingAction;
 			crntAlien.SelectAction();
