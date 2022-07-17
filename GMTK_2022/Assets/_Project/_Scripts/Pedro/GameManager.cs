@@ -123,7 +123,14 @@ namespace GMTK22
 				robot.SelectAction();
 				while (attackManager.isRunning) yield return null;
 				rbt.Log($"Finished action loop");
+				robot.Disable();
 				yield return new WaitForSeconds(1f);
+			}
+			
+			foreach (var robot in robots)
+			{
+				aliens.RemoveAll(x => x == null);
+				robot.GetComponent<Robot>().Enable();
 			}
 			yield break;
 		}
@@ -132,6 +139,7 @@ namespace GMTK22
 		{
 			while (attackManager.isRunning) yield return null;
 			crntTarget = null;
+			crntAlien.Disable();
 			crntAlien = null;
 			
 			if(HasAllTheAliensFinishedAttacking())
@@ -141,6 +149,7 @@ namespace GMTK22
 				{
 					var alien = aln.GetComponent<Alien>();
 					alien.ResetUnit();
+					alien.Enable();
 				}
 			}
 

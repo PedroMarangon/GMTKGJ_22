@@ -29,6 +29,9 @@ namespace GMTK22
 		public abstract void SelectTarget();
 		public abstract void ResetUnit();
 
+		public void Disable() => GetComponentInChildren<SpriteRenderer>().color = Color.grey;
+		public void Enable() => GetComponentInChildren<SpriteRenderer>().color = Color.white;
+
 		protected Action GetAction(ActionType actionType) => actionType switch
 		{
 			ActionType.Attack => atkAction,
