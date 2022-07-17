@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   redAnimator: {fileID: 9100000, guid: 6d64a287c07a75e479248a061c984ed6, type: 2}
-  blueAnimator: {fileID: 9100000, guid: 6d64a287c07a75e479248a061c984ed6, type: 2}
+  blueAnimator: {fileID: 22100000, guid: f98df3abcb00edf499b9b79d68675d7c, type: 2}
 --- !u!114 &2137623928621443575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,7 +70,6 @@ MonoBehaviour:
   health: 20
   sprite: {fileID: 2387814129683203428}
   DmgManager: {fileID: 0}
-  valorMinimoTaunt: 0
   valorMinimoHeal: 14
   valorMinimoAtaque: 4
 --- !u!61 &2387814129089487192
