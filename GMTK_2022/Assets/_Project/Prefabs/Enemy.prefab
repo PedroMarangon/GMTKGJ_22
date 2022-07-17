@@ -150,10 +150,11 @@ MonoBehaviour:
   healthBar: {fileID: 3914116631139656827}
   max_health: 20
   health: 20
+  sprite: {fileID: 2387814129683203428}
+  DmgManager: {fileID: 0}
   valorMinimoTaunt: 0
   valorMinimoHeal: 14
   valorMinimoAtaque: 4
-  sprite: {fileID: 2387814129683203428}
 --- !u!61 &2387814129089487192
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -352,7 +353,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.4528302, g: 0.4528302, b: 0.4528302, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -436,7 +437,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.09337926, g: 0.6792453, b: 0, a: 1}
+  m_Color: {r: 0.13872838, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

@@ -4,6 +4,7 @@ using PedroUtils;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -25,7 +26,10 @@ namespace GMTK22
 		[SerializeField] private Alien crntAlien;
 		[SerializeField] private List<Transform> aliens, robots;
 		[SerializeField] private Button d20Btn;
-        private MicroState microState = MicroState.None;
+		[SerializeField] private Animator d20Anim;
+		[SerializeField] private TMP_Text d20Text;
+
+		private MicroState microState = MicroState.None;
 		private attackEnemy attackManager;
 
 
@@ -74,7 +78,7 @@ namespace GMTK22
 
 		public Collider2D GetObjectOnMouse(ActionType action)
 		{
-			return crntAlien.CrntAction switch
+			return action switch
 			{
 				ActionType.Attack => GetObjectOnMouse(whatIsRobot),
 				ActionType.Heal => GetObjectOnMouse(whatIsAlien),
@@ -85,11 +89,16 @@ namespace GMTK22
 		public void RollD20()
 		{
 			D20 = Random.Range(0, 20) + 1;
-			this.Log($"D20: {D20}");
+			d20Anim.SetTrigger("Spin");
+			d20Text.text = $"{D20}";
+		}
 
+		public void ExecuteAction()
+		{
 			crntAlien.ExecuteAction();
 			StartCoroutine(nameof(AlienAction));
 		}
+
 		public void EnableD20() => d20Btn.interactable = true;
 		public void DisableD20() => d20Btn.interactable = false;
 
