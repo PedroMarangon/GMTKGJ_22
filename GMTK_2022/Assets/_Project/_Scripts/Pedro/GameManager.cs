@@ -112,10 +112,12 @@ namespace GMTK22
 
 		private IEnumerator RobotsTurn()
 		{
+			robots.RemoveAll(x => x == null);
 			var list = new List<Transform>(robots);
 			list.OrderBy(x => Random.value);
 			foreach (var rbt in robots)
 			{
+				aliens.RemoveAll(x => x == null);
 				rbt.Log($"Starting action loop...");
 				Robot robot = rbt.GetComponent<Robot>();
 				robot.SelectAction();
